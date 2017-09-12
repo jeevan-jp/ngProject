@@ -5,7 +5,7 @@
  fxLayoutAlign.gt-md="space-around center"
  fxLayoutGap="10px">
 
- <md-card *ngIf="dish" fxFlex>
+ <md-card *ngIf="dish" fxFlex="30">
   <md-card-header>
    <div md-card-avatar></div>
    <md-card-title>
@@ -18,7 +18,7 @@
   </md-card-content>
  </md-card>
 
- <md-card *ngIf="promotion" fxFlex>
+ <md-card *ngIf="promotion" fxFlex="30">
   <md-card-header>
    <div md-card-avatar></div>
    <md-card-title>
@@ -30,5 +30,18 @@
    <p>{{promotion.description}}</p>
   </md-card-content>
  </md-card>
+
+ <md-card *ngIf="leader" fxFlex="30">
+    <md-card-header>
+     <div md-card-avatar></div>
+     <md-card-title>
+      <h3>{{leader.name | uppercase}}</h3>
+     </md-card-title>
+    </md-card-header>
+    <img md-card-image src={{leader.image}} alt={{leader.name}}>
+    <md-card-content>
+     <p>{{leader.description}}</p>
+    </md-card-content>
+   </md-card>
 
 </div>
