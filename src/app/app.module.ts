@@ -22,6 +22,7 @@ import { PromotionService } from './services/promotion.service';
 import { CorporateLeaderService } from './services/corporate-leader.service';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     FooterComponent,
     AboutComponent,
     ContactComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +43,11 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     HttpModule,
     MaterialModule,
     FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [ DishService, PromotionService, CorporateLeaderService],
+  entryComponents: [LoginComponent],   //components which are not triggered directly (will be opened via click)
   bootstrap: [AppComponent]
 })
 export class AppModule { }
