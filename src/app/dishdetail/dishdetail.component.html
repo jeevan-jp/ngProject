@@ -19,9 +19,11 @@
       <md-card-content>
         <p>{{dish.description}}</p>
         <md-card-actions>
+          <button md-button [routerLink]="['/dishdetail' , prev]" ><span class="fa fa-chevron-left fa-lg"></span></button>
           <button md-button (click)="goBack()">BACK</button>
           <button md-button>LIKE</button>
           <button md-button>SHARE</button>
+          <button md-button [routerLink]="['/dishdetail' , next]"><span class="fa fa-chevron-right fa-lg"></span></button>
         </md-card-actions>
       </md-card-content>
 
@@ -31,11 +33,10 @@
     <md-spinner></md-spinner>  <h4>Loading... Please Wait</h4>
 </div>
 
-    <div fxFlex="40">
-      <div fxFlex *ngIf="dish">
+
+      <div fxFlex="40" *ngIf="dish">
         <h3>Comments</h3>
-        <div 
-          fxLayout="column">
+        <div fxLayout="column">
 
           <md-list fxFlex>
             <md-list-item *ngFor="let comm of dish.comments">
@@ -46,5 +47,4 @@
           </md-list>
         </div>
       </div>
-    </div>
 </div>
