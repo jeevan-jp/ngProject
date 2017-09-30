@@ -33,18 +33,55 @@
     <md-spinner></md-spinner>  <h4>Loading... Please Wait</h4>
 </div>
 
-
-      <div fxFlex="40" *ngIf="dish">
-        <h3>Comments</h3>
-        <div fxLayout="column">
-
-          <md-list fxFlex>
-            <md-list-item *ngFor="let comm of dish.comments">
-              <p md-line>{{comm.comment}}</p>
-              <p md-line>{{comm.rating}} stars</p>
-              <p md-line>-- {{comm.author}} {{comm.date | date:'MMM d, yyyy'}}</p>
-            </md-list-item>
-          </md-list>
-        </div>
+   <div fxFlex="40" *ngIf="dish">
+    <h3>Comments</h3>
+      <div fxLayout="column">
+        <md-list fxFlex>
+          <md-list-item *ngFor="let comm of dish.comments">
+            <p md-line>{{comm.comment}}</p>
+            <p md-line>{{comm.rating}} stars</p>
+            <p md-line>-- {{comm.author}} {{comm.date | date:'MMM d, yyyy'}}</p>
+          </md-list-item>
+        </md-list>
       </div>
+
+      <div fxFlex="40" [hidden]="!(commentForm.valid)">
+        <md-list fxFlex>
+          <md-list-item>
+            <p md-line>{{commentForm.comment}}</p>
+            <p md-line>{{commentForm.rating}} stars</p>
+            <p md-line>-- {{commentForm.author}}</p>
+          </md-list-item>
+        </md-list>
+      </div>  
+
+      <div fxFlex>
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" novalidate>
+          <p>
+            <md-input-container class="full-width" dividerColor="{{formErrors.author ? 'warn' : 'primary' }}">
+              <input mdInput [(ngModel)]="commentForm.author" placeholder="Name" formControlName="author" type="text" required>
+              <md-hint>
+                <span [hidden]="!(formErrors.author)">
+                  {{formErrors.author}}
+                </span>
+              </md-hint>
+            </md-input-container>
+          </p>
+          <p>
+            <md-slider [(ngModel)]="commentForm.rating" formControlName="rating" tick-interval="1" thumbLabel tickInterval="1" min="1" max="5" step="1.0" value="5"></md-slider>
+          </p>
+          <p>
+            <md-input-container class="full-width" dividerColor="{{ formErrors.comment ? 'warn' : 'primary' }}">
+              <textarea [(ngModel)]="commentForm.comment" formControlName="comment" mdInput placeholder="Your Comment"></textarea>
+              <md-hint>
+                <span [hidden]="!(formErrors.comment)">
+                  {{formErrors.comment}}
+                </span>
+              </md-hint>
+            </md-input-container>
+          </p>
+          <button type="submit" md-button class="background-primary text-floral-white" [disabled]="commentForm.invalid" >Submit</button>
+        </form>
+      </div>
+    </div>
 </div>

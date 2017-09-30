@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Params, ActivatedRoute } from '@angular/router'; //Allow to access route parameters
 import { Location } from '@angular/common'; //Allows to track location of page in the history of browser
@@ -6,6 +7,7 @@ import { Location } from '@angular/common'; //Allows to track location of page i
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { Comment } from '../shared/comment';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -24,7 +26,10 @@ export class DishdetailComponent implements OnInit {
   //Changes into constructor are made to get hold of dish :id by using various services
   constructor(private dishservice: DishService,
     private route: ActivatedRoute, 
-    private location: Location) { }
+    private location: Location,
+    private fb: FormBuilder) {
+      this.createForm();
+     }
 
     ngOnInit() {
       
@@ -39,6 +44,69 @@ export class DishdetailComponent implements OnInit {
           this.prev = this.dishIds[(this.dishIds.length + index - 1)%this.dishIds.length];
           this.next = this.dishIds[(this.dishIds.length + index + 1)%this.dishIds.length];
         }
+
+        commentForm: FormGroup;
+        userComment: Comment;
+
+        formErrors = {
+          'author': '',
+          'comment': ''
+        }
+
+        validationMessages= {
+          'author': {
+            'required':  'Your Name is required.',
+            'minlength':  'Aothor Name must be at least 2 characters long.',
+            'maxlength':  'Name cannot be more than 25 characters long.'
+          },
+          'comment': {
+            'required': 'Comment is required.'
+          }
+        }
+
+        createForm(): void {
+          this.commentForm = this.fb.group({
+            rating: [5],
+            comment: ['', [Validators.required]],
+            author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25) ]]
+          });
+
+        this.commentForm.valueChanges
+        .subscribe(data => this.onValueChanged(data));
+    
+        this.onValueChanged(); // (re)set validation messages now
+      }
+    
+      onValueChanged(data?: any) {      
+        if (!this.commentForm) { return; }
+        const form = this.commentForm;
+        for (const field in this.formErrors) {
+          // clear previous error message (if any)
+          this.formErrors[field] = '';
+          const control = form.get(field);
+          if (control && control.dirty && !control.valid) {
+            const messages = this.validationMessages[field];
+            for (const key in control.errors) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
+
+      onSubmit() {
+        this.userComment = this.commentForm.value;
+        this.userComment.date = new Date().toISOString();
+        if(this.userComment.rating === undefined) {
+          this.userComment.rating = 5;
+        }
+        console.log(this.userComment);
+        this.dish.comments.push(this.userComment);
+        this.commentForm.reset({
+          rating: 5,
+          comment: '',
+          author: ''
+        });
+      }
 
   goBack(): void {
     this.location.back();
