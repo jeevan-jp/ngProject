@@ -23,6 +23,7 @@ export class DishdetailComponent implements OnInit {
   dishIds: number[];
   prev: number;
   next: number;
+  errMess: string;
   //Changes into constructor are made to get hold of dish :id by using various services
   constructor(private dishservice: DishService,
     private route: ActivatedRoute, 
@@ -37,7 +38,8 @@ export class DishdetailComponent implements OnInit {
           this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
           this.route.params
             .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-            .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+            .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+            errorMess => this.errMess = <any>errorMess);
         }
       
         setPrevNext(dishId: number) {

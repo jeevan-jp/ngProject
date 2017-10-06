@@ -17,9 +17,13 @@
    <p>{{dish.description}}</p>
   </md-card-content>
  </md-card>
- <div [hidden]="dish">
+ <div [hidden]="dish || dishErrMess">
      <md-spinner></md-spinner>  <h4>Loading... Please Wait</h4>
  </div>
+ <div *ngIf="dishErrMess">
+    <h2>Error</h2>
+    <h4>{{dishErrMess}}</h4>
+  </div>
 
  <md-card *ngIf="promotion" fxFlex="30">
   <md-card-header>
@@ -33,9 +37,13 @@
    <p>{{promotion.description}}</p>
   </md-card-content>
  </md-card>
- <div [hidden]="dish">
+ <div [hidden]="dish || promErrMess">
      <md-spinner></md-spinner>  <h4>Loading... Please Wait</h4>
  </div>
+ <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{promErrMess}}</h4>
+  </div>
 
  <md-card *ngIf="leader" fxFlex="30">
     <md-card-header>
@@ -49,8 +57,12 @@
      <p>{{leader.description}}</p>
     </md-card-content>
    </md-card>
-   <div [hidden]="dish">
+   <div [hidden]="dish || leaderErrMess">
        <md-spinner></md-spinner>  <h4>Loading... Please Wait</h4>
+   </div>
+   <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{leaderErrMess}}</h4>
    </div>
 
 </div>
