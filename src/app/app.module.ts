@@ -21,9 +21,11 @@ import { DishdetailComponent } from './dishdetail/dishdetail.component';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { CorporateLeaderService } from './services/corporate-leader.service';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
+import { baseURL } from './shared/baseurl';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ DishService, PromotionService, CorporateLeaderService],
+  providers: [ DishService, PromotionService, CorporateLeaderService,
+  { provide: 'BaseURL', useValue: baseURL },
+    ProcessHTTPMsgService ],
   entryComponents: [LoginComponent],   //components which are not triggered directly (will be opened via click)
   bootstrap: [AppComponent]
 })
