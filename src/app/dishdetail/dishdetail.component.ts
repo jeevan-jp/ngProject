@@ -117,7 +117,7 @@ export class DishdetailComponent implements OnInit {
         console.log(this.userComment);
         this.dishcopy.comments.push(this.userComment);
         this.dishcopy.save()
-          .subscribe(dish => {this.dish = dish; console.log(this.dish) });
+          .subscribe(dish => { this.dish = dish; console.log(this.dish) });
         this.commentForm.reset({
           rating: 5,
           comment: '',

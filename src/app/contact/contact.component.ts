@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
-import { flyInOut, expand } from '../animations/app.animation';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
+import { FeedbackService } from '../services/feedback.service';
+
+import 'rxjs/add/operator/delay';
 
 @Component({
   selector: 'app-contact',
@@ -9,17 +12,22 @@ import { flyInOut, expand } from '../animations/app.animation';
   styleUrls: ['./contact.component.scss'],
   host: {
     '[@flyInOut]': 'true',
-    'style': 'display: block;'
+    'style': 'display: block;',
     },
   animations: [
+      visibility(),
       flyInOut(),
       expand()
   ]
 })
 export class ContactComponent implements OnInit {
 
-  feedbackForm: FormGroup;
   feedback: Feedback;
+  flag1 = true;
+  flag2 = true;
+  feedbackForm: FormGroup;
+  submittedFeedback: Feedback;
+  errMess: string;
   contactType = ContactType;
   formErrors = {
     'firstname': '',
@@ -49,7 +57,8 @@ export class ContactComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private feedbackOne: FeedbackService,
+    private fb: FormBuilder) {
     this.createForm();
    }
 
@@ -87,8 +96,18 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.flag1 = false;
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
+    this.feedbackOne.submitFeedback(this.feedback)
+    .subscribe(result => {
+      this.submittedFeedback = result;
+      this.flag2 = false; 
+      this.flag1 = true;
+      setTimeout(() => { 
+        this.flag2 = true;
+        }, 5000)
+      }, errMess => this.errMess = errMess);
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',

@@ -22,6 +22,7 @@ import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { CorporateLeaderService } from './services/corporate-leader.service';
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
+import { FeedbackService } from './services/feedback.service';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -57,7 +58,8 @@ import { HighlightDirective } from './directives/highlight.directive';
   ],
   providers: [ DishService, PromotionService, CorporateLeaderService,
   { provide: 'BaseURL', useValue: baseURL },
-    ProcessHTTPMsgService ],
+    ProcessHTTPMsgService,
+    FeedbackService ],
   entryComponents: [LoginComponent],   //components which are not triggered directly (will be opened via click)
   bootstrap: [AppComponent]
 })

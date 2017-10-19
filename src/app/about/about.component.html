@@ -58,7 +58,7 @@ fxLayoutGap="10px">
      <h2>Corporate Leadership</h2>
      <md-list>
       <md-list-item *ngFor="let led of leaders">
-        <img md-list-avatar [src]="led.image" alt="{{ led.name }}" float/>
+        <img md-list-avatar src="{{BaseURL + led.image}}" alt="{{ led.name }}" float/>
         <div md-line>{{ led.name }}, {{ led.abbr | uppercase }}</div>
         <div md-line>{{ led.designation }} </div>
         <div md-line>{{ led.description }}</div>
