@@ -27,5 +27,5 @@ Before running the tests make sure you are serving the app via `ng serve`.
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-## image preview
+## Image preview
 ![image of home page](https://github.com/jeevan-jp/ngProject/blob/master/src/assets/images/ngGithub.jpeg)
